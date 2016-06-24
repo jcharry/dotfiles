@@ -12,7 +12,7 @@ http://jeetworks.org/from-acolyte-to-adept-the-next-step-after-nop-ing-arrow-key
 so that I have to used numbered movements, or get used to more powerful
 movement techniques
 
-#####.bash_profile##### 
+#####.bash_profile#####
 relevant aliases and PATH config
 not really portable, but I want to store it here
 
