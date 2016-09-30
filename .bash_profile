@@ -22,7 +22,7 @@ source ~/.git-completion.bash
 
 # Set aliases
 alias ll='ls -lAh'
-alias home='cd ~'       
+alias home='cd ~'
 alias mv='mv -i'                #interactively move
 alias cp='cp -i'                #interactively cp
 alias df='df -Ha'               #show human readable format
@@ -43,7 +43,10 @@ alias js='node'
 alias classes='cd ~/Documents/School/ITP/Classes/'
 alias cls='cd ~/Documents/School/ITP/Classes/'
 alias dev='cd ~/Documents/Dev'
-alias noFreeLunch='cd /Users/jamiecharry/Documents/Dev/IPK/noFreeLunch'
+alias NFL='cd /Users/jamiecharry/Documents/Dev/IPK/noFreeLunch'
+
+# Alias so I start octave without gui by default
+alias oct='octave --no-gui'
 
 # Colorize output
 export CLICOLOR=1
@@ -86,3 +89,6 @@ test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shel
 
 # AWS Configuration
 export AWS_DEFAULT_PROFILE=jamie.charry
+
+#Fontconfig for octave
+export FONTCONFIG_PATH=/opt/X11/lib/X11/fontconfig

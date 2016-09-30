@@ -11,7 +11,7 @@
         "mocha": true
     },
     "rules": {
-        "no-alert": "error",
+        "no-alert": "off",
         "no-array-constructor": "error",
         "no-bitwise": "error",
         "no-caller": "error",
@@ -53,7 +53,7 @@
         "no-implicit-coercion": "error",
         "no-implicit-globals": "off",
         "no-implied-eval": "error",
-        "no-inline-comments": "error",
+        "no-inline-comments": "off",
         "no-inner-declarations": "error",
         "no-invalid-regexp": "error",
         "no-invalid-this": "off",
@@ -157,7 +157,7 @@
         "dot-location": "off",
         "dot-notation": "error",
         "eol-last": "error",
-        "eqeqeq": "error",
+        "eqeqeq": "off",
         "func-names": "off",
         "func-style": "error",
         "generator-star-spacing": "error",

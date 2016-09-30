@@ -24,8 +24,8 @@ Plugin 'scrooloose/nerdTree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'moll/vim-node'
-Plugin 'othree/html5-syntax.vim'            
-Plugin 'othree/html5.vim'                   
+Plugin 'othree/html5-syntax.vim'
+Plugin 'othree/html5.vim'
 Plugin 'mustache/vim-mustache-handlebars'   "help with Handlebars
 Plugin 'marijnh/tern_for_vim'               "Code analyzer for JS
 Plugin 'Valloric/MatchTagAlways'            "Highlight html tags
@@ -35,6 +35,11 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}  "Easily insert html tags
 Plugin 'mxw/vim-jsx'
 Plugin 'mtscout6/syntastic-local-eslint.vim'
 Plugin 'nvie/vim-flake8'
+Plugin 'elzr/vim-json'
+"Plugin 'JamshedVesuna/vim-markdown-preview'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'easymotion/vim-easymotion'
 " Keep Plugin commands between vundle#begin/end.
 
 " All of your Plugins must be added before the following line
@@ -51,6 +56,12 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+
+" Remap leader
+let mapleader = ","
+
+" Add shortcut to edit .vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 "set t_Co=256
 syntax enable
@@ -104,9 +115,47 @@ set softtabstop=4
 set backspace=2 " make backspace work like most other apps
 set expandtab
 
+" Highlight trailing spaces
+set list
+set listchars+=trail:\ 
+
+
 " Map Ctrl-c to new-line and indent
 imap <C-c> <CR><Esc>O
 
+"let g:loaded_vimballPlugin = 1
+" append to vim runtimepath
+set runtimepath^=~/.vim/bundle/vimball
+
+" Pyclewn
+" let g:pyclewn_terminal = "xterm, -e"
+
+" vim-easymotion config
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader><Leader>j <Plug>(easymotion-j)
+map <Leader><Leader>k <Plug>(easymotion-k)
+
+" Override default search in favor of easymotion's search
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
+
+
+"
 " Syntastic settings
 "set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
@@ -135,11 +184,26 @@ let g:neomake_javascript_eslint_maker = {
     \ 'args': ['--no-color', '--format', 'compact'],
     \ 'errorformat': '%f: line %l\, col %c\, %m'
     \ }
+
+let g:neomake_python_flake8_maker = {
+    \ 'args': ['--ignore=E221,E241,E272,E251,W702,E203,E201,E202',  '--format=default'],
+    \ 'errorformat':
+        \ '%E%f:%l: could not compile,%-Z%p^,' .
+        \ '%A%f:%l:%c: %t%n %m,' .
+        \ '%A%f:%l: %t%n %m,' .
+        \ '%-G%.%#',
+    \ }
+let g:neomake_python_enabled_makers = ['flake8']
+
+"let g:neomake_python_pylint_exe = 'pylint2'
+
+"let g:neomake_python_
+autocmd! BufWritePre * Neomake
 let g:neomake_open_list = 2
-autocmd BufWritePost * Neomake
 "let g:neomake_verbose = 3
 
 
+" Relative line numbering, handle switching between windows
 set number
 if has('autocmd')
 augroup vimrc_linenumbering
@@ -207,8 +271,10 @@ set formatoptions=qrn1
 
 " When using change 'c' add '$' to end of change location
 set cpoptions+=$
+
+" Jump to matching tags?
 let g:mta_use_matchparen_group = 0
-let g:mta_filetypes = { 'html' : 1, 'xhtml' : 1, 'xml' : 1, 'jinja' : 1, 'html.handlebars': 1}
+let g:mta_filetypes = { 'jsx': 1, 'html' : 1, 'xhtml' : 1, 'xml' : 1, 'jinja' : 1, 'html.handlebars': 1}
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 
@@ -227,34 +293,58 @@ source ~/.vim/scripts/closetag.vim
 "   cs"' - changes surroundign " to '
 "   cs'<p> - changes surrouding ' to html <p> tags
 "   ds" - deletes surrounding "
+
 " Map comma to Ctrl-W to for Window operations
-map , <C-W>
+nnoremap <leader>j <C-W>j
+nnoremap <leader>k <C-W>k
+nnoremap <leader>l <C-W>l
+nnoremap <leader>h <C-W>h
+nnoremap <leader>J <C-W>J
+nnoremap <leader>K <C-W>K
+nnoremap <leader>L <C-W>L
+nnoremap <leader>H <C-W>H
+nnoremap <leader>w <C-W>w
+nnoremap <leader>_ <C-W>_
+nnoremap <leader>\| <C-W>\|
+nnoremap <leader>r <C-W>r
+nnoremap <leader>R <C-W>R
+nnoremap <leader>x <C-W>x
+nnoremap <leader>= <C-W>=
+
+" Save a file with leader-s
+nnoremap <leader>s :wa<cr>
 
 " Virtual edit allows for moving cursor over non-real characters
 set virtualedit=all
 
 " Wildmenu allows for tab completing of files and commands
 set wildmenu
-"hi StatusLine ctermbg=gray ctermfg=lightgreen
-hi StatusLine ctermfg=darkgreen
+
+" Set colors for status line and cursor
+hi StatusLine ctermfg=darkgreen ctermbg=black
+hi Cursor guibg=lightgreen guifg=lightgreen
 
 " Highlight Search Results
-set hlsearch
+"set hlsearch
 " Highlight first instance of search pattern while typing
-set incsearch
+"set incsearch
 " Map <leader><space> to quickly un-highlight
-nnoremap ,<space> :noh<cr>
+nnoremap <leader><space> :noh<cr>
 
 " Disable backspace behavior
 "set backspace=
 
+" Markdown for vim plugin
+"let vim_markdown_preview_toggle=0
+"let vim_markdown_preview_browser='Google Chrome' 
+let g:vim_markdown_folding_disabled = 1 " vim-markdown disable folding
 
 
 " Allow vim to set terminal title
 set title
 
 " Toggle spellcheck
-nmap <silent> <leader>s :set invspell<CR>
+" nmap <silent> <leader>s :set invspell<CR>
 
 " Reload vimrc Automatically
 autocmd BufWritePost .vimrc source %
@@ -285,9 +375,6 @@ set foldcolumn=1
 " YCM Debugging
 let g:ycm_server_python_interpreter = '/usr/bin/python'
 
-" Set cursor color
-"hi Cursor guibg=lightgreen guifg=black 
-hi Cursor guibg=lightgreen guifg=black 
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
