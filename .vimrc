@@ -22,13 +22,11 @@ Plugin 'neomake/neomake'
 Plugin 'benjie/neomake-local-eslint.vim'
 Plugin 'scrooloose/nerdTree'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'moll/vim-node'
 Plugin 'othree/html5-syntax.vim'
 Plugin 'othree/html5.vim'
 Plugin 'mustache/vim-mustache-handlebars'   "help with Handlebars
 Plugin 'marijnh/tern_for_vim'               "Code analyzer for JS
-Plugin 'Valloric/MatchTagAlways'            "Highlight html tags
 Plugin 'aperezdc/vim-template'              "Templates for new files
 Plugin 'tpope/vim-surround'                 "Surround words with quotes,
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}  "Easily insert html tags
@@ -40,7 +38,6 @@ Plugin 'elzr/vim-json'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'wincent/command-t'
 " Keep Plugin commands between vundle#begin/end.
 
 " All of your Plugins must be added before the following line
