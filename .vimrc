@@ -26,7 +26,6 @@ Plugin 'moll/vim-node'
 Plugin 'othree/html5-syntax.vim'
 Plugin 'othree/html5.vim'
 Plugin 'mustache/vim-mustache-handlebars'   "help with Handlebars
-Plugin 'marijnh/tern_for_vim'               "Code analyzer for JS
 Plugin 'aperezdc/vim-template'              "Templates for new files
 Plugin 'tpope/vim-surround'                 "Surround words with quotes,
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}  "Easily insert html tags
@@ -128,8 +127,14 @@ set backspace=2 " make backspace work like most other apps
 set expandtab
 
 " Highlight trailing spaces
-set list
-set listchars+=trail:\ 
+"set list
+"set listchars+=trail:\ 
+
+" Linux handle insert mode cursor type
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
 
 
 " Map Ctrl-c to new-line and indent
