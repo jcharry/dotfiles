@@ -40,6 +40,7 @@ Plugin 'elzr/vim-json'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'easymotion/vim-easymotion'
+Plugin 'wincent/command-t'
 " Keep Plugin commands between vundle#begin/end.
 
 " All of your Plugins must be added before the following line
@@ -88,6 +89,20 @@ colorscheme solarized
 "filetype on
 "Yank an entire file with 'yaf'
 onoremap af :<C-u>normal! ggvG<CR>
+
+" Allows you to easily replace the current word and all its occurrences.
+" Replace through whole document
+nnoremap <Leader>ra :%s/\<<C-r><C-w>\>/
+" Replace just on current line
+nnoremap <Leader>rw :s/\<<C-r><C-w>\>/
+" Replace highlighted word through whole document
+vnoremap <Leader>ra y:%s/<C-r>"/
+" Replace highlighted word through line
+vnoremap <Leader>rw y:s/<C-r>"/
+
+" Replace tabs with four spaces. Make sure that there is a tab character between
+" the first pair of slashes when you copy this mapping into your .vimrc!
+nnoremap <Leader>rts :%s/\t/    /g<CR>
 
 " Stay in visual mode when indenting. You will never have to run gv after
 " performing an indentation.
@@ -229,6 +244,8 @@ endif
 set autoread
 
 "NERDTree
+" easier reload
+cnoremap nt NERDTree
 autocmd vimenter * NERDTree
 autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
 map <C-n> :NERDTreeToggle<CR>
@@ -306,9 +323,9 @@ nnoremap <leader>H <C-W>H
 nnoremap <leader>w <C-W>w
 nnoremap <leader>_ <C-W>_
 nnoremap <leader>\| <C-W>\|
-nnoremap <leader>r <C-W>r
-nnoremap <leader>R <C-W>R
-nnoremap <leader>x <C-W>x
+"nnoremap <leader>r <C-W>r
+"nnoremap <leader>R <C-W>R
+"nnoremap <leader>x <C-W>x
 nnoremap <leader>= <C-W>=
 
 " Save a file with leader-s
