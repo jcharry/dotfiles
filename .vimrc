@@ -16,9 +16,9 @@ Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'Raimondi/delimitMate'
-"Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 Plugin 'FooSoft/vim-argwrap'                "unwrap dictionaries, datastructures, etc
-Plugin 'neomake/neomake'
+"Plugin 'neomake/neomake'
 Plugin 'benjie/neomake-local-eslint.vim'
 Plugin 'scrooloose/nerdTree'
 Plugin 'scrooloose/nerdcommenter'
@@ -169,50 +169,50 @@ map  N <Plug>(easymotion-prev)
 
 "
 " Syntastic settings
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 "" JSX in JS files
-"let g:jsx_ext_required = 0 " Allow JSX in normal JS files
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_python_checkers = ['pep8']
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_python_checkers = ['pep8']
 
 "" Don't check html files unless I explicity ask for it: i.e. :SyntasticCheck
-"let syntastic_mode_map = { 'passive_filetypes': ['html'] }
+let syntastic_mode_map = { 'passive_filetypes': ['html'] }
 
 " Neomake Settings
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_jsx_enabled_makers = ['eslint']
-let g:neomake_jsx_eslint_maker = {
-    \ 'args': ['--no-color', '--format', 'compact'],
-    \ 'errorformat': '%f: line %l\, col %c\, %m'
-    \ }
-let g:neomake_javascript_eslint_maker = {
-    \ 'args': ['--no-color', '--format', 'compact'],
-    \ 'errorformat': '%f: line %l\, col %c\, %m'
-    \ }
+"let g:neomake_javascript_enabled_makers = ['eslint']
+"let g:neomake_jsx_enabled_makers = ['eslint']
+"let g:neomake_jsx_eslint_maker = {
+    "\ 'args': ['--no-color', '--format', 'compact'],
+    "\ 'errorformat': '%f: line %l\, col %c\, %m'
+    "\ }
+"let g:neomake_javascript_eslint_maker = {
+    "\ 'args': ['--no-color', '--format', 'compact'],
+    "\ 'errorformat': '%f: line %l\, col %c\, %m'
+    "\ }
 
-let g:neomake_python_flake8_maker = {
-    \ 'args': ['--ignore=E221,E241,E272,E251,W702,E203,E201,E202',  '--format=default'],
-    \ 'errorformat':
-        \ '%E%f:%l: could not compile,%-Z%p^,' .
-        \ '%A%f:%l:%c: %t%n %m,' .
-        \ '%A%f:%l: %t%n %m,' .
-        \ '%-G%.%#',
-    \ }
-let g:neomake_python_enabled_makers = ['flake8']
+"let g:neomake_python_flake8_maker = {
+    "\ 'args': ['--ignore=E221,E241,E272,E251,W702,E203,E201,E202',  '--format=default'],
+    "\ 'errorformat':
+        "\ '%E%f:%l: could not compile,%-Z%p^,' .
+        "\ '%A%f:%l:%c: %t%n %m,' .
+        "\ '%A%f:%l: %t%n %m,' .
+        "\ '%-G%.%#',
+    "\ }
+"let g:neomake_python_enabled_makers = ['flake8']
 
-"let g:neomake_python_pylint_exe = 'pylint2'
+""let g:neomake_python_pylint_exe = 'pylint2'
 
-"let g:neomake_python_
-autocmd! BufWritePre * Neomake
-let g:neomake_open_list = 2
-"let g:neomake_verbose = 3
+""let g:neomake_python_
+"autocmd! BufWritePre * Neomake
+"let g:neomake_open_list = 2
+""let g:neomake_verbose = 3
 
 
 " Relative line numbering, handle switching between windows
@@ -295,10 +295,6 @@ nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
 " Allow for jumping to corresponding HTML elements
 runtime macros/matchit.vim
-
-" Use Ctrl-_ to add closing HTML tag
-let g:closetag_html_style=1
-source ~/.vim/scripts/closetag.vim
 
 " Plugin Notes
 " surround.vim
