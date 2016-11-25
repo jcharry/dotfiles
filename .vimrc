@@ -33,35 +33,35 @@ Plugin 'aperezdc/vim-template'              "Templates for new files
 Plugin 'tpope/vim-surround'                 "Surround words with quotes,
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}  "Easily insert html tags
 Plugin 'mxw/vim-jsx'
-Plugin 'mtscout6/syntastic-local-eslint.vim'
+"Plugin 'mtscout6/syntastic-local-eslint.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'elzr/vim-json'
-"Plugin 'JamshedVesuna/vim-markdown-preview'
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+""Plugin 'JamshedVesuna/vim-markdown-preview'
+"Plugin 'godlygeek/tabular'
+"Plugin 'plasticboy/vim-markdown'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'wincent/command-t'
+"Plugin 'wincent/command-t'
 " Keep Plugin commands between vundle#begin/end.
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+"" To ignore plugin indent changes, instead use:
+""filetype plugin on
+""
+"" Brief help
+"" :PluginList       - lists configured plugins
+"" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+"" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+"" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+""
+"" see :h vundle for more details or wiki for FAQ
+"" Put your non-Plugin stuff after this line
 
-" Remap leader
+"" Remap leader
 let mapleader = ","
 
-" Add shortcut to edit .vimrc
+"" Add shortcut to edit .vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 "set t_Co=256
@@ -90,24 +90,24 @@ colorscheme solarized
 "Yank an entire file with 'yaf'
 onoremap af :<C-u>normal! ggvG<CR>
 
-" Allows you to easily replace the current word and all its occurrences.
-" Replace through whole document
-nnoremap <Leader>ra :%s/\<<C-r><C-w>\>/
-" Replace just on current line
-nnoremap <Leader>rw :s/\<<C-r><C-w>\>/
-" Replace highlighted word through whole document
-vnoremap <Leader>ra y:%s/<C-r>"/
-" Replace highlighted word through line
-vnoremap <Leader>rw y:s/<C-r>"/
+"" Allows you to easily replace the current word and all its occurrences.
+"" Replace through whole document
+"nnoremap <Leader>ra :%s/\<<C-r><C-w>\>/
+"" Replace just on current line
+"nnoremap <Leader>rw :s/\<<C-r><C-w>\>/
+"" Replace highlighted word through whole document
+"vnoremap <Leader>ra y:%s/<C-r>"/
+"" Replace highlighted word through line
+"vnoremap <Leader>rw y:s/<C-r>"/
 
-" Replace tabs with four spaces. Make sure that there is a tab character between
-" the first pair of slashes when you copy this mapping into your .vimrc!
-nnoremap <Leader>rts :%s/\t/    /g<CR>
+"" Replace tabs with four spaces. Make sure that there is a tab character between
+"" the first pair of slashes when you copy this mapping into your .vimrc!
+"nnoremap <Leader>rts :%s/\t/    /g<CR>
 
-" Stay in visual mode when indenting. You will never have to run gv after
-" performing an indentation.
-"vnoremap < <gv
-"vnoremap > >gv<Paste>
+"" Stay in visual mode when indenting. You will never have to run gv after
+"" performing an indentation.
+""vnoremap < <gv
+""vnoremap > >gv<Paste>
 
 " Handlebars treated as html for syntax coloring
 au BufReadPost *.handlebars set syntax=html
@@ -130,6 +130,12 @@ set softtabstop=4
 set backspace=2 " make backspace work like most other apps
 set expandtab
 
+"" Source local .vimrc if available in working directory
+""set exrc
+
+"" Add some extra security for local .vimrc files
+""set secure
+
 " Highlight trailing spaces
 set list
 set listchars+=trail:\ 
@@ -138,12 +144,12 @@ set listchars+=trail:\
 " Map Ctrl-c to new-line and indent
 imap <C-c> <CR><Esc>O
 
-"let g:loaded_vimballPlugin = 1
-" append to vim runtimepath
-set runtimepath^=~/.vim/bundle/vimball
+""let g:loaded_vimballPlugin = 1
+"" append to vim runtimepath
+"set runtimepath^=~/.vim/bundle/vimball
 
-" Pyclewn
-" let g:pyclewn_terminal = "xterm, -e"
+"" Pyclewn
+"" let g:pyclewn_terminal = "xterm, -e"
 
 " vim-easymotion config
 let g:EasyMotion_do_mapping = 0 " Disable default mappings
@@ -245,7 +251,7 @@ set autoread
 
 "NERDTree
 " easier reload
-cnoremap nt NERDTree
+nnoremap <leader>nt :NERDTree<CR>
 autocmd vimenter * NERDTree
 autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
 map <C-n> :NERDTreeToggle<CR>
@@ -331,6 +337,9 @@ nnoremap <leader>= <C-W>=
 " Save a file with leader-s
 nnoremap <leader>s :wa<cr>
 
+" Delete all debugger; statements
+nnoremap <leader>dd :g/debugger/d<CR>
+
 " Virtual edit allows for moving cursor over non-real characters
 set virtualedit=all
 
@@ -351,10 +360,10 @@ nnoremap <leader><space> :noh<cr>
 " Disable backspace behavior
 "set backspace=
 
-" Markdown for vim plugin
-"let vim_markdown_preview_toggle=0
-"let vim_markdown_preview_browser='Google Chrome' 
-let g:vim_markdown_folding_disabled = 1 " vim-markdown disable folding
+"" Markdown for vim plugin
+""let vim_markdown_preview_toggle=0
+""let vim_markdown_preview_browser='Google Chrome' 
+"let g:vim_markdown_folding_disabled = 1 " vim-markdown disable folding
 
 
 " Allow vim to set terminal title
@@ -384,13 +393,38 @@ set foldcolumn=1
 "augroup AutoSaveFolds
     "autocmd!
     "autocmd BufWinLeave *.* mkview 1
-    "autocmd BufWinEnter *.* silent loadview 1 
+    "autocmd BufWinEnter *.* silent loadview 1
     "autocmd BufWinLeave .* mkview 1
-    "autocmd BufWinEnter .* silent loadview 1 
+    "autocmd BufWinEnter .* silent loadview 1
 "augroup END
 
-" YCM Debugging
-let g:ycm_server_python_interpreter = '/usr/bin/python'
+" YCM
+let g:ycm_server_python_interpreter = '/usr/local/bin/python'
+let g:ycm_python_binary_path = 'usr/local/bin/python'
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:python2_host_prog = '/usr/local/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
+"let g:ycm_semantic_triggers =  {
+  "\   'c' : ['->', '.'],
+  "\   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  "\             're!\[.*\]\s'],
+  "\   'ocaml' : ['.', '#'],
+  "\   'cpp,objcpp' : ['->', '.', '::'],
+  "\   'perl' : ['->'],
+  "\   'php' : ['->', '::'],
+  "\   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  "\   'ruby' : ['.', '::'],
+  "\   'lua' : ['.', ':'],
+  "\   'erlang' : [':'],
+  "\ }
+let g:ycm_cache_omnifunc = 1
+let g:ycm_auto_trigger = 1
+let g:ycm_min_num_of_chars_for_completion = 2
+
+let g:ycm_key_detailed_diagnostics = ''
+let g:ycm_server_use_vim_stdout = 1
+let g:ycm_server_log_level = 'debug'
+
 
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
@@ -406,38 +440,38 @@ function! DisableIfNonCounted(move) range
     if v:count
         return a:move
     else
-        " You can make this do something annoying like:
-           " echoerr "Count required!"
-           " sleep 2
-        return ""
+	" You can make this do something annoying like:
+	   " echoerr "Count required!"
+	   " sleep 2
+	return ""
     endif
 endfunction
 
 function! SetDisablingOfBasicMotionsIfNonCounted(on)
     let keys_to_disable = get(g:, "keys_to_disable_if_not_preceded_by_count", ["j", "k", "h", "l"])
     if a:on
-        for key in keys_to_disable
-            execute "noremap <expr> <silent> " . key . " DisableIfNonCounted('" . key . "')"
-        endfor
-        let g:keys_to_disable_if_not_preceded_by_count = keys_to_disable
-        let g:is_non_counted_basic_motions_disabled = 1
+	for key in keys_to_disable
+	    execute "noremap <expr> <silent> " . key . " DisableIfNonCounted('" . key . "')"
+	endfor
+	let g:keys_to_disable_if_not_preceded_by_count = keys_to_disable
+	let g:is_non_counted_basic_motions_disabled = 1
     else
-        for key in keys_to_disable
-            try
-                execute "unmap " . key
-            catch /E31:/
-            endtry
-        endfor
-        let g:is_non_counted_basic_motions_disabled = 0
+	for key in keys_to_disable
+	    try
+		execute "unmap " . key
+	    catch /E31:/
+	    endtry
+	endfor
+	let g:is_non_counted_basic_motions_disabled = 0
     endif
 endfunction
 
 function! ToggleDisablingOfBasicMotionsIfNonCounted()
     let is_disabled = get(g:, "is_non_counted_basic_motions_disabled", 0)
     if is_disabled
-        call SetDisablingOfBasicMotionsIfNonCounted(0)
+	call SetDisablingOfBasicMotionsIfNonCounted(0)
     else
-        call SetDisablingOfBasicMotionsIfNonCounted(1)
+	call SetDisablingOfBasicMotionsIfNonCounted(1)
     endif
 endfunction
 

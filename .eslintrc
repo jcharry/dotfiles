@@ -34,6 +34,7 @@
             ignoreComments: true,
             ignoreUrls: true
         }],
-        "no-warning-comments": "off"
+        "no-warning-comments": "off",
+        "require-jsdoc": "off"
     }
 }
