@@ -1,0 +1,12 @@
+{
+    "libs": [
+        "browser",
+        "react",
+        "react-dom",
+        "underscore",
+        "jquery"
+            ],
+        "plugins": {
+          "node": {}
+        }
+}
