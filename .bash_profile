@@ -134,4 +134,4 @@ source ~/.git-completion.bash
 # Bash Prompt
 #export PS1='\W 🌍 "
 #export PS1="\u@\h \W \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
-export PS1="\W \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\] 🌍  "
+export PS1="\u@\h \W \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\] 🌍  "

@@ -307,7 +307,7 @@ runtime macros/matchit.vim
 
 " Use Ctrl-_ to add closing HTML tag
 let g:closetag_html_style=1
-source ~/.vim/scripts/closetag.vim
+"source ~/.vim/scripts/closetag.vim
 
 " Plugin Notes
 " surround.vim
@@ -399,11 +399,11 @@ set foldcolumn=1
 "augroup END
 
 " YCM
-let g:ycm_server_python_interpreter = '/usr/local/bin/python'
-let g:ycm_python_binary_path = 'usr/local/bin/python'
+let g:ycm_server_python_interpreter = '/usr/bin/python'
+let g:ycm_python_binary_path = 'usr/bin/python'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:python2_host_prog = '/usr/local/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:python2_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 "let g:ycm_semantic_triggers =  {
   "\   'c' : ['->', '.'],
   "\   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
