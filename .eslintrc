@@ -35,6 +35,8 @@
             ignoreUrls: true
         }],
         "no-warning-comments": "off",
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "comma-dangle": "never",
+        "object-curly-spacing": ["error", "always"]
     }
 }
