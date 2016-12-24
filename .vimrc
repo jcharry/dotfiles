@@ -41,6 +41,7 @@ Plugin 'elzr/vim-json'                      " Makes working with JSON nice
 Plugin 'godlygeek/tabular'                  " Allows for easily aligning text
 Plugin 'plasticboy/vim-markdown'            " Markdown highlighting
 Plugin 'easymotion/vim-easymotion'          " Change standard search functionality
+Plugin 'mileszs/ack.vim'                    " Ack search (faster grep)
 " Plugin 'jmcantrell/vim-virtualenv'          " Activate and deactivate virtualenvs from within vim
 " Plugin 'vim-airline/vim-airline'            " Status Bar prettify
 " Plugin 'vim-airline/vim-airline-themes'
@@ -441,6 +442,9 @@ runtime macros/matchit.vim
 " Use Ctrl-_ to add closing HTML tag
 " let g:closetag_html_style=1
 " source ~/.vim/scripts/closetag.vim
+"
+" closetag-vim settings
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.jsx"
 
 " Plugin Notes
 " surround.vim
@@ -529,6 +533,11 @@ set noerrorbells visualbell t_vb=
         "<li class="item-2"></li>
         "<li class="item-3"></li>
     "</ul>
+
+" Find all todos
+command Todo vimgrep TODO\|FIXME\|XXX/j ** | cw
+" command -nargs=1 Todo execute 'noautocmd vimgrep /TODO\|FIXME\|XXX <args>/**/*.js'
+" command -nargs=1 -complete=file Todo execute "Ags" 'TODO\|FIXME\|XXX' <f-args>
 
 " Fold stuff
 set foldcolumn=1

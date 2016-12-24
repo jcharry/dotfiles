@@ -13,6 +13,7 @@ cal
 echo ""
 echo -n "Uptime: " ; uptime
 
+
 # # Set aliases
 # alias ll='ls -lAh'
 # alias home='cd ~'

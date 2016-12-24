@@ -71,6 +71,13 @@ export WORKON_HOME=$HOME/.virtualenvs
 # NVM config
 export NVM_DIR="/Users/jamiecharry/.nvm"
 
+# GOlang
+# How to install -> http://stackoverflow.com/questions/12843063/install-go-with-brew-and-running-the-gotour
+export GOPATH=$HOME/Go
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+
 # Git aware prompt
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 
