@@ -69,8 +69,11 @@ export WORKON_HOME=$HOME/.virtualenvs
 # export VIRTUALENVWRAPPER_WORKON_CD=1
 
 # NVM config
-export NVM_DIR="/Users/jamiecharry/.nvm"
+export NVM_DIR="/home/jcharry/.nvm"
 
 # Git aware prompt
 export GITAWAREPROMPT=~/.bash/git-aware-prompt
 
+
+export NVM_DIR="/home/jcharry/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
