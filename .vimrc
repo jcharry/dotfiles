@@ -36,6 +36,7 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}  " Easily insert html tags
 Plugin 'mxw/vim-jsx'                        " JSX syntax highlighting and formatting
 " Plugin 'mtscout6/syntastic-local-eslint.vim'
 Plugin 'nvie/vim-flake8'                    " Python style checker
+Plugin 'hynek/vim-python-pep8-indent'       " Python indenting
 Plugin 'elzr/vim-json'                      " Makes working with JSON nice
 "Plugin 'JamshedVesuna/vim-markdown-preview'
 Plugin 'godlygeek/tabular'                  " Allows for easily aligning text
@@ -48,13 +49,14 @@ Plugin 'mileszs/ack.vim'                    " Ack search (faster grep)
 "Plugin 'wincent/command-t'
 Plugin 'alvan/vim-closetag'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'wikitopian/hardmode'                " HARD MODE
 " Keep Plugin commands between vundle#begin/end.
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
-"filetype plugin on
+filetype plugin on
 "
 " Brief help
 " :PluginList       - lists configured plugins
@@ -96,11 +98,11 @@ colorscheme solarized
 
 " vim-indent-guides options
 set ts=4 sw=4 et
-let g:indent_guides_auto_colors=0
+let g:indent_guides_auto_colors=1
 let g:indent_guides_start_level=2
 let g:indent_guides_guide_size=1
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkblue
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=magenta
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgray
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgray
 
 
 "filetype on
@@ -144,8 +146,10 @@ set background=dark
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
-set backspace=indent,eol,start "make backspace work like most programs
 set expandtab
+" set smarttab
+" set smartindent
+set backspace=indent,eol,start "make backspace work like most programs
 
 
 " Source local .vimrc if available in working directory
@@ -155,8 +159,33 @@ set expandtab
 "set secure
 
 " Highlight trailing spaces
-set list
-set listchars+=trail:\ 
+" set list
+" Toggle hidden characters on or off
+nmap <leader>l :set list!<CR>
+" set listchars=tab:>,trail:\
+set listchars=tab:▸\ ,trail:\ 
+
+if has("autocmd")
+    autocmd BufWritePre *.py,*.js,*.jsx,*.cpp,*.h :call Preserve("%s/\\s\\+$//e")
+endif
+
+function! Preserve(command)
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    execute a:command
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+
+nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+nmap _= :call Preserve("normal gg=G")<CR>
+
+" Delete all debugger; statements
+nnoremap <leader>dd :call Preserve("g/debugger/d")<CR>
 
 " Map Ctrl-c to new-line and indent
 imap <C-c> <CR><Esc>O
@@ -239,6 +268,10 @@ let g:neomake_python_enabled_makers = ['flake8']
 autocmd! BufWritePre * Neomake
 let g:neomake_open_list = 2
 "let g:neomake_verbose = 3
+
+" CPP Makers
+let g:neomake_cpp_enable_markers=['clang']
+let g:neomake_cpp_clang_args = ["-std=c++14", "-Wextra", "-Wall", "-fsanitize=undefined","-g"]
 
 " Neomake maps   ]
 function! LocationNext()
@@ -329,6 +362,7 @@ autocmd BufEnter * call GetCurrentContent()
 
 " DelimitMate Settings
 let g:delimitMate_expand_cr=1
+" let g:delimitMate_expand_cr=0
 
 " Need to ignore <>, otherwise, combined with html closetag-vim, it
 " puts an extra >
@@ -479,8 +513,6 @@ nmap <C-l> <C-W>l
 " Save a file with leader-s
 nnoremap <leader>sa :wa<cr>
 
-" Delete all debugger; statements
-nnoremap <leader>dd :g/debugger/d<CR>
 
 " Virtual edit allows for moving cursor over non-real characters
 set virtualedit=all
@@ -633,4 +665,4 @@ command! EnableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCount
 
 nnoremap <Leader>tog :ToggleDisablingOfNonCountedBasicMotions<cr>
 
-DisableNonCountedBasicMotions
+" DisableNonCountedBasicMotions

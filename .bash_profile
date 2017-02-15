@@ -136,3 +136,15 @@ source ~/.git-completion.bash
 #export PS1='\W 🌍 "
 #export PS1="\u@\h \W \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\]\$ "
 export PS1="\W \[$txtcyn\]\$git_branch\[$txtred\]\$git_dirty\[$txtrst\] 🌍  "
+
+# Countdown command
+# function countdown(){
+#     local now=$(date +%s)
+#     local end=$((now + $1))
+#     while (( now < end )); do
+#         printf "%s\r" "$(date -u -d @$((end - now)) +%T)"
+#         sleep 0.25
+#         now=$(date +%s)
+#     done
+#     echo
+# }

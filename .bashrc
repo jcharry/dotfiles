@@ -16,13 +16,14 @@ alias top='top -o cpu'          #sort top by CPU usage
 alias todo='cat ~/todo.txt'
 alias vim='nvim'
 alias js='node'
-alias vimrc='vim ~/.vimrc'
+alias vimrc='nvim ~/.vimrc'
 
 # Navigation aliases - folders that I go to all the time...
 alias classes='cd ~/Documents/School/ITP/Classes/'
 alias cls='cd ~/Documents/School/ITP/Classes/'
 alias dev='cd ~/Documents/Dev'
 alias NFL='cd /Users/jamiecharry/Documents/Dev/IPK/noFreeLunch'
+alias thesis='cd ~/Documents/School/ITP/Classes/Thesis/'
 
 # Alias so I start octave without gui by default
 alias oct='octave --no-gui'
