@@ -633,4 +633,3 @@ command! EnableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCount
 
 nnoremap <Leader>tog :ToggleDisablingOfNonCountedBasicMotions<cr>
 
-DisableNonCountedBasicMotions
