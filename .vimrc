@@ -73,7 +73,7 @@ nnoremap <Leader>ev :vsplit $MYVIMRC<cr>
 
 "set t_Co=256
 syntax enable
-set background=dark
+set background=light
 " set encoding=utf-8
 
 " Python highlighting
