@@ -14,7 +14,7 @@ alias ss='http-server'          #start a node server
 alias py='python'
 alias top='top -o cpu'          #sort top by CPU usage
 alias todo='cat ~/todo.txt'
-alias vim='nvim'
+alias v='nvim'
 alias js='node'
 alias vimrc='nvim ~/.vimrc'
 

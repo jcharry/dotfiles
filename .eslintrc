@@ -1,11 +1,13 @@
 {
-    "ecmaFeatures": {
-        "globalReturn": true,
-            "modules": true
+    "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
     },
     "env": {
         "browser": true,
-        "es6": true,
         "node": true
     },
     "globals": {
@@ -18,11 +20,17 @@
         "before": true,
         "it": true,
         "expect": true,
-        "sinon": true
+        "sinon": true,
+        "commonjs": true
     },
     "parser": "babel-eslint",
-    "plugins": [],
-    "extends": "eslint-config-google",
+    "plugins": [
+        "react"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended"
+    ],
     "rules": {
         "indent": ["error", 4, {
             "SwitchCase": 1
@@ -30,13 +38,14 @@
         "curly": ["error", "all"],
         "one-var": "off",
         "spaced-comment": "off",
+        "semi": ["error", "always"],
         "max-len": [1, 120, 4, {
             ignoreComments: true,
             ignoreUrls: true
         }],
         "no-warning-comments": "off",
         "require-jsdoc": "off",
-        "comma-dangle": "never",
+        "comma-dangle": "off",
         "object-curly-spacing": ["error", "always"]
     }
 }

@@ -233,7 +233,7 @@ omap / <Plug>(easymotion-tn)
 "let g:syntastic_check_on_open = 1
 "let g:syntastic_check_on_wq = 0
 "" JSX in JS files
-"let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 "let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_python_checkers = ['pep8']
 
@@ -296,8 +296,10 @@ if old_last_winnr == winnr('$')
 endif
 endfunction
 
+" Neomake - Tab goes to next error
 nnoremap <Tab> :call LocationNext()<cr>
 nnoremap <Leader><Tab> :call ToggleNeomakeWindow()<cr>
+
 
 
 " Relative line numbering, handle switching between windows
@@ -510,6 +512,14 @@ nmap <C-k> <C-W>k
 nmap <C-h> <C-W>h
 nmap <C-l> <C-W>l
 
+if has('nvim')
+tnoremap <C-h> <C-\><C-n><C-w>h
+tnoremap <C-j> <C-\><C-n><C-w>j
+tnoremap <C-k> <C-\><C-n><C-w>k
+tnoremap <C-l> <C-\><C-n><C-w>l
+tnoremap <Esc> <C-\><C-n>
+endif
+
 " Save a file with leader-s
 nnoremap <leader>sa :wa<cr>
 
@@ -665,4 +675,4 @@ command! EnableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCount
 
 nnoremap <Leader>tog :ToggleDisablingOfNonCountedBasicMotions<cr>
 
-" DisableNonCountedBasicMotions
+DisableNonCountedBasicMotions
