@@ -12,9 +12,10 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 " PLUGINS I ADDED!
-Plugin 'jelera/vim-javascript-syntax'       " Javascript syntax highlighting
+" Plugin 'jelera/vim-javascript-syntax'       " Javascript syntax highlighting
 Plugin 'pangloss/vim-javascript'            " Javascript syntax highlighting
-Plugin 'nathanaelkane/vim-indent-guides'    " Javascript indenting
+Plugin 'othree/yajs.vim'                    " Fork of jelera/vim-javascript-syntax
+" Plugin 'nathanaelkane/vim-indent-guides'    " Javascript indenting
 Plugin 'Raimondi/delimitMate'               " Automatically add closing brackets, quotes, etc in insert mode
 Plugin 'FooSoft/vim-argwrap'                "unwrap dictionaries, datastructures, etc
 Plugin 'neomake/neomake'                    " Neovim syntax checker
@@ -22,7 +23,7 @@ Plugin 'benjie/neomake-local-eslint.vim'    " Allows for use of local .eslintrc
 Plugin 'scrooloose/nerdTree'                " File system explorer
 Plugin 'scrooloose/nerdcommenter'           " Quick code commenting
 Plugin 'Valloric/YouCompleteMe'             " Autocompletion
-Plugin 'moll/vim-node'                      " Allows opening required node modules with 'gf'
+" Plugin 'moll/vim-node'                      " Allows opening required node modules with 'gf'
 Plugin 'othree/html5-syntax.vim'            " Html syntax highlighter
 Plugin 'othree/html5.vim'                   " Omnicomplete function for html
 Plugin 'mustache/vim-mustache-handlebars'   " help with Handlebars
@@ -39,17 +40,22 @@ Plugin 'nvie/vim-flake8'                    " Python style checker
 Plugin 'hynek/vim-python-pep8-indent'       " Python indenting
 Plugin 'elzr/vim-json'                      " Makes working with JSON nice
 "Plugin 'JamshedVesuna/vim-markdown-preview'
-Plugin 'godlygeek/tabular'                  " Allows for easily aligning text
-Plugin 'plasticboy/vim-markdown'            " Markdown highlighting
+" Plugin 'godlygeek/tabular'                  " Allows for easily aligning text
+" Plugin 'plasticboy/vim-markdown'            " Markdown highlighting
 Plugin 'easymotion/vim-easymotion'          " Change standard search functionality
 Plugin 'mileszs/ack.vim'                    " Ack search (faster grep)
 " Plugin 'jmcantrell/vim-virtualenv'          " Activate and deactivate virtualenvs from within vim
-" Plugin 'vim-airline/vim-airline'            " Status Bar prettify
-" Plugin 'vim-airline/vim-airline-themes'
-"Plugin 'wincent/command-t'
+Plugin 'vim-airline/vim-airline'            " Status Bar prettify
+Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'wincent/command-t'
+Plugin 'junegunn/fzf'                       " fuzzy file finder - use with :FZF
 Plugin 'alvan/vim-closetag'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'wikitopian/hardmode'                " HARD MODE
+" Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'vim-scripts/BufOnly.vim'            " use <leader>bd to delete all buffers but current one
+Plugin 'prettier/vim-prettier'              " Pretty shit up
+" Plugin 'romainl/vim-qf'                     " Deal with quickfix nonense
+
 " Keep Plugin commands between vundle#begin/end.
 
 " All of your Plugins must be added before the following line
@@ -71,43 +77,57 @@ filetype plugin on
 let mapleader = ","
 
 " Add shortcut to edit .vimrc
-nnoremap <Leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <Leader>ev :vsplit /Users/jcharry/.vimrc<cr>
 
-"set t_Co=256
 syntax enable
+set t_Co=256
+colorscheme molokai
+" set background=light
+set encoding=utf-8
+
+" If you prefer the scheme to match the original monokai background color, put this in your .vimrc file:
+" let g:molokai_original = 1
+" There is also an alternative scheme under development for color terminals which attempts to bring the 256 color version as close as possible to the the default (dark) GUI version. To access, add this to your .vimrc:
+let g:rehash256 = 1
 set background=dark
-" set encoding=utf-8
 
 " Python highlighting
 let python_highlight_all=1
 
 if has("gui_running")
-colorscheme solarized
-let g:solarized_termtrans=0
-let g:solarized_contrast="normal"
-let g:solarized_visibility="normal"
+" colorscheme solarized
+" let g:solarized_termtrans=0
+" let g:solarized_contrast="normal"
+" let g:solarized_visibility="normal"
 endif
 
 " Solarized stuff
 "let g:solarized_termtrans = 1
-set t_Co=256
-let g:solarized_termcolors = 16
-let g:solarized_visibility = "high"
-let g:solarized_contrast = "high"
-colorscheme solarized
+" let g:solarized_termcolors = 16
+" let g:solarized_visibility = "high"
+" let g:solarized_contrast = "high"
+" colorscheme solarized
 
 " vim-indent-guides options
 set ts=4 sw=4 et
-let g:indent_guides_auto_colors=1
-let g:indent_guides_start_level=2
-let g:indent_guides_guide_size=1
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgray
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgray
+" let g:indent_guides_auto_colors=1
+" let g:indent_guides_start_level=2
+" let g:indent_guides_guide_size=1
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgray
+" autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgray
 
+" Column highlighting
+" highlight ColorColumn ctermbg=darkgray
+set colorcolumn=120
+" highlight OverLength ctermbg=cyan ctermfg=white guibg=#592929
+" match OverLength /\%81v.\+/
 
 "filetype on
 "Yank an entire file with 'yaf'
 onoremap af :<C-u>normal! ggvG<CR>
+
+" Print current file path with a simple keystroke
+nnoremap <leader>ef :echo @%<cr>
 
 " Allows you to easily replace the current word and all its occurrences.
 " Replace through whole document
@@ -139,18 +159,32 @@ noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 
 " Font
-set guifont=Monaco:h13
+" set guifont=Monaco:h13
 
 " Set tabs and spaces
-set background=dark
-set shiftwidth=4
-set tabstop=4
-set softtabstop=4
+" set background=dark
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
 set expandtab
 " set smarttab
 " set smartindent
 set backspace=indent,eol,start "make backspace work like most programs
 
+" disable swap files, potentially causing an issue, but what issue? I have no idea. Shit.
+set noswapfile
+
+" ack.vim settings
+" Use ag with ack.vim instead of ack
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+" :Ack! will prevent jumping to first result automatically, Map this shit
+nnoremap <leader>s :Ack!<Space>
+
+" Open new vsplits to the right
+" set splitright
 
 " Source local .vimrc if available in working directory
 "set exrc
@@ -221,6 +255,9 @@ omap / <Plug>(easymotion-tn)
 " map  n <Plug>(easymotion-next)
 " map  N <Plug>(easymotion-prev)
 
+" Delete all buffers except the current one
+nnoremap <leader>bd :BufOnly<cr>
+
 
 "
 " Syntastic settings
@@ -244,6 +281,7 @@ let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
 let g:neomake_jsx_eslint_maker = {
+      \ 'exe': '/Users/jcharry/repos/squarespace-v6/site-server/node_modules/.bin/eslint',
 \ 'args': ['--no-color', '--format', 'compact'],
 \ 'errorformat': '%f: line %l\, col %c\, %m'
 \ }
@@ -334,6 +372,9 @@ autocmd vimenter * NERDTree
 autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
 map <C-n> :NERDTreeToggle<CR>
 
+" Shortcut to change working directory to universal repo
+nnoremap <leader>wd :NERDTree /Users/jcharry/repos/squarespace-v6/site-server/src/main/webapp/universal<CR>
+
 " Close all open buffers on entering a window if the only
 " buffer that's left is the NERDTree buffer
 function! s:CloseIfOnlyNerdTreeLeft()
@@ -401,24 +442,73 @@ let g:tern_show_argument_hints='on_hold'
 nnoremap <silent> <leader>a :ArgWrap<CR>
 
 " Airline
-" set encoding=utf-8
-set ambiwidth=double
-let g:bufferline_echo = 0
+" set ambiwidth=double
+" let g:bufferline_echo = 0
 let g:airline_powerline_fonts=1
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_theme = 'solarized'
+" let g:airline_left_sep = ''
+" let g:airline_right_sep = ''
+let g:airline_theme = 'molokai'
 " if !exists('g:airline_symbols')
 "   let g:airline_symbols = {}
 " endif
 " let g:airline_symbols.space = "\ua0"
 set laststatus=2
-let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#whitespace#enabled = 0
 " disable to improve fugitive performance
-let g:airline#extensions#branch#enabled = 0
+" let g:airline#extensions#branch#enabled = 0
 " put a buffer list at the top
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline_detect_spell=0
+let g:airline_inactive_collapse=1
+let g:airline_skip_empty_sections = 1
+let g:airline#extensions#branch#format = 1
+let g:airline_section_x = ''
+let g:airline_section_y = ''
+
+" Improve contrast
+let g:airline_base16_improved_contrast = 1
+" let g:airline#extensions#tabline#show_tab_type = 1
+" let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number
+" let g:airline#extensions#tabline#tabs_label = 't'
+let g:airline#extensions#tabline#buffers_label = 'b'
+
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
+
+let g:airline#extensions#tabline#buffer_idx_format = {
+      \ '0': '0 ',
+      \ '1': '1 ',
+      \ '2': '2 ',
+      \ '3': '3 ',
+      \ '4': '4 ',
+      \ '5': '5 ',
+      \ '6': '6 ',
+      \ '7': '7 ',
+      \ '8': '8 ',
+      \ '9': '9 '
+      \}
+
+" let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#tabline#close_symbol = 'X'
+
+" Airline YCM config
+let g:airline#extensions#ycm#enabled = 1
+let g:airline#extensions#ycm#error_symbol = 'E:'
+let g:airline#extensions#ycm#warning_symbol = 'W:'
+
 
 if ! has('gui_running')
 set ttimeoutlen=10
@@ -451,15 +541,15 @@ endif
 
 
 " Text wrapping on .txt files
-au BufNewFile,BufRead *.txt set wrap
-au BufNewFile,BufRead *.txt set linebreak
-au BufNewFile,BufRead *.txt set breakindent
-" Spell checking on text files
-au BufNewFile,BufRead *.txt set spell spelllang=en_us
+" au BufNewFile,BufRead *.txt set wrap
+" au BufNewFile,BufRead *.txt set linebreak
+" au BufNewFile,BufRead *.txt set breakindent
+" " Spell checking on text files
+" au BufNewFile,BufRead *.txt set spell spelllang=en_us
 
 " Handle long lines elegantly
 set wrap
-set textwidth=79
+set textwidth=119
 set formatoptions=qrn1
 
 " When using change 'c' add '$' to end of change location
@@ -470,8 +560,6 @@ let g:mta_use_matchparen_group = 0
 let g:mta_filetypes = { 'jsx': 1, 'html' : 1, 'xhtml' : 1, 'xml' : 1, 'jinja' : 1, 'html.handlebars': 1}
 nnoremap <leader>% :MtaJumpToOtherTag<cr>
 
-
-
 " Allow for jumping to corresponding HTML elements
 runtime macros/matchit.vim
 
@@ -480,7 +568,7 @@ runtime macros/matchit.vim
 " source ~/.vim/scripts/closetag.vim
 "
 " closetag-vim settings
-let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.jsx"
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.jsx,*.js"
 
 " Plugin Notes
 " surround.vim
@@ -520,19 +608,20 @@ tnoremap <C-l> <C-\><C-n><C-w>l
 tnoremap <Esc> <C-\><C-n>
 endif
 
-" Save a file with leader-s
-nnoremap <leader>sa :wa<cr>
-
-
 " Virtual edit allows for moving cursor over non-real characters
 set virtualedit=all
 
 " Wildmenu allows for tab completing of files and commands
 set wildmenu
 
+" hi Visual ctermbg=white
+
 " Set colors for status line and cursor
-hi StatusLine ctermfg=black ctermbg=white
+" hi StatusLine ctermfg=green ctermbg=white
+set cursorline
+hi CursorLine ctermbg=16
 " hi Cursor guibg=lightgreen guifg=lightgreen
+" hi Visual ctermbg=8 guibg=Grey
 " hi Cursor guibg=white guifg=orange
 " hi Cursor guibg=lightgreen guifg=magenta
 
@@ -558,11 +647,19 @@ set title
 " nmap <silent> <leader>s :set invspell<CR>
 
 " Reload vimrc Automatically
-autocmd BufWritePost .vimrc source %
+" autocmd BufWritePost .vimrc source %
 
 " Shortcut to reload vimrc from vim
 cnoremap vimrc source ~/.vimrc
 
+nnoremap <leader>f :FZF<cr>
+
+" Close quickfix windows if buffer is closed
+" QuickFix vim-qf
+" let g:qf_loclist_window_bottom=0
+" let g:qf_mapping_ack_style=1
+" let g:qf_max_height=12
+" let g:qf_auto_resize=0
 
 " Get rid of that annyoing error bell
 set noerrorbells visualbell t_vb=
@@ -577,7 +674,7 @@ set noerrorbells visualbell t_vb=
     "</ul>
 
 " Find all todos
-command Todo vimgrep TODO\|FIXME\|XXX/j ** | cw
+" command Todo vimgrep TODO\|FIXME\|XXX/j ** | cw
 " command -nargs=1 Todo execute 'noautocmd vimgrep /TODO\|FIXME\|XXX <args>/**/*.js'
 " command -nargs=1 -complete=file Todo execute "Ags" 'TODO\|FIXME\|XXX' <f-args>
 
@@ -593,11 +690,12 @@ set foldcolumn=1
 "augroup END
 
 " YCM
-let g:ycm_server_python_interpreter = '/usr/local/bin/python'
-let g:ycm_python_binary_path = 'usr/local/bin/python'
+let g:ycm_server_python_interpreter = '/usr/bin/python'
+let g:ycm_python_binary_path = 'usr/bin/python'
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:python2_host_prog = '/usr/local/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
+let g:loaded_python_provider=1
+let g:python2_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/usr/local/Cellar/python3/3.6.1/bin/python3'
 let g:ycm_semantic_triggers =  {
   \   'c' : ['->', '.'],
   \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
@@ -615,11 +713,41 @@ let g:ycm_cache_omnifunc = 1
 let g:ycm_auto_trigger = 1
 let g:ycm_min_num_of_chars_for_completion = 2
 
-let g:ycm_key_detailed_diagnostics = ''
-let g:ycm_server_use_vim_stdout = 1
-let g:ycm_server_log_level = 'debug'
+" let g:ycm_key_detailed_diagnostics = ''
+" let g:ycm_server_use_vim_stdout = 1
+" let g:ycm_server_log_level = 'debug'
 
+" Prettier config
+" max line lengh that prettier will wrap on
+let g:prettier#config#print_width = 80
 
+" number of spaces per indentation level
+let g:prettier#config#tab_width = 2
+
+" use tabs over spaces
+let g:prettier#config#use_tabs = 'false'
+
+" print semicolons
+let g:prettier#config#semi = 'true'
+
+" single quotes over double quotes
+let g:prettier#config#single_quote = 'true' 
+
+" print spaces between brackets
+let g:prettier#config#bracket_spacing = 'true' 
+
+" put > on the last line instead of new line
+let g:prettier#config#jsx_bracket_same_line = 'true' 
+
+" none|es5|all
+let g:prettier#config#trailing_comma = 'none'
+
+" flow|babylon|typescript|postcss|json|graphql
+"g:prettier#config#parser = 'flow'
+
+if has('mouse')
+  set mouse=a
+endif
 
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
@@ -628,51 +756,3 @@ let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 " directly to a file, othertimes renaming the old file
 " and writes a new one
 set backupcopy=yes
-
-" TO GET ME TO USE COUNTED MOVEMENTS
-function! DisableIfNonCounted(move) range
-    if v:count
-        return a:move
-    else
-        " You can make this do something annoying like:
-           " echoerr "Count required!"
-           " sleep 2
-        return ""
-    endif
-endfunction
-
-function! SetDisablingOfBasicMotionsIfNonCounted(on)
-    let keys_to_disable = get(g:, "keys_to_disable_if_not_preceded_by_count", ["j", "k"])
-    if a:on
-        for key in keys_to_disable
-            execute "noremap <expr> <silent> " . key . " DisableIfNonCounted('" . key . "')"
-        endfor
-        let g:keys_to_disable_if_not_preceded_by_count = keys_to_disable
-        let g:is_non_counted_basic_motions_disabled = 1
-    else
-        for key in keys_to_disable
-            try
-                execute "unmap " . key
-            catch /E31:/
-            endtry
-        endfor
-        let g:is_non_counted_basic_motions_disabled = 0
-    endif
-endfunction
-
-function! ToggleDisablingOfBasicMotionsIfNonCounted()
-    let is_disabled = get(g:, "is_non_counted_basic_motions_disabled", 0)
-    if is_disabled
-        call SetDisablingOfBasicMotionsIfNonCounted(0)
-    else
-        call SetDisablingOfBasicMotionsIfNonCounted(1)
-    endif
-endfunction
-
-command! ToggleDisablingOfNonCountedBasicMotions :call ToggleDisablingOfBasicMotionsIfNonCounted()
-command! DisableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(1)
-command! EnableNonCountedBasicMotions :call SetDisablingOfBasicMotionsIfNonCounted(0)
-
-nnoremap <Leader>tog :ToggleDisablingOfNonCountedBasicMotions<cr>
-
-DisableNonCountedBasicMotions
