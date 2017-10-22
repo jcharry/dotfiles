@@ -2,6 +2,8 @@ autocmd!
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+" MAde a change
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -18,7 +20,8 @@ Plugin 'othree/yajs.vim'                    " Fork of jelera/vim-javascript-synt
 " Plugin 'nathanaelkane/vim-indent-guides'    " Javascript indenting
 Plugin 'Raimondi/delimitMate'               " Automatically add closing brackets, quotes, etc in insert mode
 Plugin 'FooSoft/vim-argwrap'                "unwrap dictionaries, datastructures, etc
-Plugin 'neomake/neomake'                    " Neovim syntax checker
+" Plugin 'neomake/neomake'                    " Neovim syntax checker
+Plugin 'w0rp/ale'                           " Linter - alternative to Neomake
 Plugin 'benjie/neomake-local-eslint.vim'    " Allows for use of local .eslintrc
 Plugin 'scrooloose/nerdTree'                " File system explorer
 Plugin 'scrooloose/nerdcommenter'           " Quick code commenting
@@ -32,6 +35,7 @@ Plugin 'Valloric/MatchTagAlways'            " Highlight html tags
 Plugin 'aperezdc/vim-template'              " Templates for new files
 Plugin 'tpope/vim-surround'                 " Surround words with things
 Plugin 'tpope/vim-repeat'                   " Make the . key do more
+Plugin 'airblade/vim-gitgutter'             " Show git diffs in gutter
 Plugin 'tpope/vim-fugitive'                 " Git wrapper
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}  " Easily insert html tags
 Plugin 'mxw/vim-jsx'                        " JSX syntax highlighting and formatting
@@ -118,7 +122,7 @@ set ts=4 sw=4 et
 
 " Column highlighting
 " highlight ColorColumn ctermbg=darkgray
-set colorcolumn=120
+set colorcolumn=80,120
 " highlight OverLength ctermbg=cyan ctermfg=white guibg=#592929
 " match OverLength /\%81v.\+/
 
@@ -277,6 +281,18 @@ let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 "" Don't check html files unless I explicity ask for it: i.e. :SyntasticCheck
 "let syntastic_mode_map = { 'passive_filetypes': ['html'] }
 
+" Vim GitGutter Settings
+nnoremap <leader>gt :GitGutterLineHighlightsToggle<cr>
+
+" Ale Settings
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+let g:airline#extensions#ale#enabled = 1
+let g:ale_sign_column_always = 1
+let g:ale_sign_error = '!!'
+let g:ale_sign_warning = '>>'
+
 " Neomake Settings
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
@@ -303,7 +319,7 @@ let g:neomake_python_enabled_makers = ['flake8']
 "let g:neomake_python_pylint_exe = 'pylint2'
 
 "let g:neomake_python_
-autocmd! BufWritePre * Neomake
+" autocmd! BufWritePre * Neomake
 let g:neomake_open_list = 2
 "let g:neomake_verbose = 3
 
@@ -459,6 +475,8 @@ let g:airline#extensions#whitespace#enabled = 0
 " put a buffer list at the top
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+
+let g:airline#extensions#quickfix#quickfix_text = 'Quickfix'
 
 let g:airline_detect_spell=0
 let g:airline_inactive_collapse=1
@@ -737,7 +755,7 @@ let g:prettier#config#single_quote = 'true'
 let g:prettier#config#bracket_spacing = 'true' 
 
 " put > on the last line instead of new line
-let g:prettier#config#jsx_bracket_same_line = 'true' 
+let g:prettier#config#jsx_bracket_same_line = 'false' 
 
 " none|es5|all
 let g:prettier#config#trailing_comma = 'none'
