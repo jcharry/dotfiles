@@ -18,17 +18,22 @@ Plugin 'alvan/vim-closetag'                 " Autoclose (x)html tags
 Plugin 'mxw/vim-jsx'                        " JSX syntax highlighting and formatting - https://github.com/mxw/vim-jsx
 Plugin 'othree/html5.vim'                   " Omnicomplete function for html
 Plugin 'pangloss/vim-javascript'            " Javascript syntax highlighting
-Plugin 'plasticboy/vim-markdown'            " Markdown support - https://github.com/plasticboy/vim-markdown
+Plugin 'leafgarland/typescript-vim'         " Typescript syntax
+" Plugin 'plasticboy/vim-markdown'            " Markdown support - https://github.com/plasticboy/vim-markdown
 
 " Completion, Linters, etc.
 Plugin 'benjie/neomake-local-eslint.vim'    " Allows for use of local .eslintrc
 Plugin 'w0rp/ale'                           " Linter - alternative to Neomake
+Plugin 'Quramy/tsuquyomi'                   " TSS Client Server
+Plugin 'mhartington/nvim-typescript'        " Neovim typescript tools
 
 " Utilities, Mappings
 Plugin 'FooSoft/vim-argwrap'                " unwrap dictionaries, datastructures, etc
 Plugin 'aperezdc/vim-template'              " Templates for new files
 Plugin 'easymotion/vim-easymotion'          " Change standard search functionality
 Plugin 'elzr/vim-json'                      " Makes working with JSON nice
+Plugin 'Shougo/vimproc.vim'                 " Async execution library
+
 " Plugin 'scrooloose/nerdTree'                " File system explorer
 Plugin 'tpope/vim-vinegar'                  " In window file explorer
 Plugin 'scrooloose/nerdcommenter'           " Quick code commenting - https://github.com/scrooloose/nerdcommenter
@@ -48,12 +53,26 @@ Plugin 'tpope/vim-fugitive'                 " Git wrapper
 
 " UI
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'ayu-theme/ayu-vim'
+Plugin 'rakr/vim-one'
+Plugin 'sonph/onehalf', {'rtp': 'vim/'}
+Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'            " Status Bar prettify
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'Yggdroot/indentLine'
 
 " Autocomplete
 Plugin 'Shougo/deoplete.nvim'               " Autocompletion
 Plugin 'marijnh/tern_for_vim'               " Code analyzer for JS
+
+" Visualize ctags
+Plugin 'majutsushi/tagbar'
+
+"My Plugins
+Plugin 'jcharry/vim-logger'
+Plugin 'jcharry/vim-spotify'
+" Plugin 'jcharry/vim-markdown-renderer'
+Plugin 'jcharry/vim-google'
 
 " Keep Plugin commands between vundle#begin/end.
 
@@ -72,127 +91,17 @@ filetype plugin on
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
+" append to vim runtimepath
+set runtimepath^=~/.vim/bundle/vimball
+
 " Get rid of that annyoing error bell
 set noerrorbells visualbell t_vb=
-
-" Remap leader
-let mapleader = ","
-let g:deoplete#enable_at_startup = 1
-
-" Add shortcut to edit .vimrc
-nnoremap <Leader>ev :vsplit /Users/jcharry/.vimrc<cr>
-
-" If you have vim >=8.0 or Neovim >= 0.1.5
-if (has("termguicolors"))
-  set termguicolors
-endif
-
-syntax enable
-set t_Co=256
-set encoding=utf-8
-
-" Jump managing
-function! GotoJump()
-  jumps
-  let j = input("Please select your jump: ")
-  if j != ''
-    let pattern = '\v\c^\+'
-    if j =~ pattern
-      let j = substitute(j, pattern, '', 'g')
-      execute "normal " . j . "\<c-i>"
-    else
-      execute "normal " . j . "\<c-o>"
-    endif
-  endif
-endfunction
-
-nnoremap <leader>j :call GotoJump()<CR>
-
-" Python highlighting
-let python_highlight_all=1
-
-" Solarized stuff
-set background=light
-colorscheme solarized
-
-set ts=4 sw=4 et
-
-" Column highlighting
-highlight ColorColumn guibg=#eee8d5
-set colorcolumn=80,120
-
-"Yank an entire file with 'yaf'
-onoremap af :<C-u>normal! ggvG<CR>
-
-" Print current file path with a simple keystroke
-nnoremap <leader>sp :echo @%<cr>
-
-" Allows you to easily replace the current word and all its occurrences.
-" Replace through whole document
-nnoremap <Leader>ra :%s/\<<C-r><C-w>\>/
-" Replace just on current line
-nnoremap <Leader>rw :s/\<<C-r><C-w>\>/
-" Replace highlighted word through whole document
-vnoremap <Leader>ra y:%s/<C-r>"/
-" Replace highlighted word through line
-vnoremap <Leader>rw y:s/<C-r>"/
-
-" Replace tabs with four spaces. Make sure that there is a tab character between
-" the first pair of slashes when you copy this mapping into your .vimrc!
-nnoremap <Leader>rts :%s/\t/    /g<CR>
-
-" Stay in visual mode when indenting. You will never have to run gv after
-" performing an indentation.
-"vnoremap < <gv
-"vnoremap > >gv<Paste>
-
-" Handlebars treated as html for syntax coloring
-au BufReadPost *.handlebars set syntax=html
-
-" Map j and k to gj and gk to more easily work with wrapped lines
-noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
-noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
-
-" Remove whitespace at end of lines upon saving
-autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
-
-" Font
-" set guifont=Monaco:h13
-
-" Set tabs and spaces
-" set background=dark
-set shiftwidth=2
-set tabstop=2
-set softtabstop=2
-set expandtab
-" set smarttab
-" set smartindent
-set backspace=indent,eol,start "make backspace work like most programs
 
 " disable swap files, potentially causing an issue, but what issue? I have no idea. Shit.
 set noswapfile
 
-" ack.vim settings
-" Use ag with ack.vim instead of ack
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-
-" :Ack! will prevent jumping to first result automatically, Map this shit
-nnoremap <leader>se :Ack!<Space>
-
-" Fugitive.vim Settings
-" Open vim diffs in a vertical split
-set diffopt+=vertical
-
-" append to vim runtimepath
-set runtimepath^=~/.vim/bundle/vimball
-
-" Delete all buffers except the current one
-nnoremap <leader>bd :BufOnly<cr>
-
 " -------------------------------------------------- "
-" --------------------- HELPERS ---------------------- "
+" --------------------- HELPERS -------------------- "
 " -------------------------------------------------- "
 function! Preserve(command)
   " Preparation: save last search, and cursor position.
@@ -228,10 +137,37 @@ endif
 "   ds" - deletes surrounding "
 
 
-
 " -------------------------------------------------- "
 " -------------------- SETTINGS -------------------- "
 " -------------------------------------------------- "
+" -------------------- Colors -------------------- "
+" Colors
+" If you have vim >=8.0 or Neovim >= 0.1.5
+if (has("termguicolors"))
+  set termguicolors
+endif
+
+set background=light
+colorscheme onehalflight
+
+syntax enable
+set t_Co=256
+set encoding=utf-8
+
+" Column highlighting
+highlight ColorColumn guibg=#efefef
+set colorcolumn=80,120
+
+" Python highlighting
+let python_highlight_all=1
+" -------------------- Formatting -------------------- "
+" Set tabs and spaces
+" set background=dark
+set shiftwidth=2
+set tabstop=2
+set softtabstop=2
+set expandtab
+set backspace=indent,eol,start "make backspace work like most programs
 " Handle long lines elegantly
 set wrap
 set textwidth=119
@@ -266,21 +202,83 @@ if has('autocmd')
   augroup END
 endif
 set autoread
+" ----------------- Line Folding ----------------- "
+" Load folds automatically on startup
+set foldcolumn=1
+augroup AutoSaveFolds
+  autocmd!
+  autocmd BufWinLeave,BufWritePre *.* mkview!
+  autocmd BufWinEnter *.* silent loadview
+augroup END
 
+if has('mouse')
+  set mouse=a
+endif
 
-" Map Ctrl-c to new-line and indent
-imap <C-c> <CR><Esc>O
+" So webpack hot reload will work with vim
+" has to do with how VIM saves files, sometimes saving
+" directly to a file, othertimes renaming the old file
+" and writes a new one
+set backupcopy=yes
 
 " -------------------------------------------------- "
 " -------------------- MAPPINGS -------------------- "
 " -------------------------------------------------- "
+" Remap leader
+let mapleader = ","
+let g:deoplete#enable_at_startup = 1
+
+" Add shortcut to edit .vimrc
+nnoremap <Leader>ev :vsplit /Users/jcharry/.vimrc<cr>
+nnoremap <Leader>vrc :source ~/.vimrc<CR>
+
+" Remap Esc because of stupid touch toolbar
+inoremap jj <Esc>
+
+" Delete all buffers except the current one
+nnoremap <leader>bd :BufOnly<cr>
 " Highlight trailing spaces
 " set list
+
 " Toggle hidden characters on or off
 nmap <leader>l :set list!<CR>
+
 " set listchars=tab:>,trail:\
 set listchars=tab:▸\ ,trail:\
 
+" Un-highlight after search
+nnoremap <leader><space> :noh<cr>
+
+"Yank an entire file with 'yaf'
+onoremap af :<C-u>normal! ggVG<CR>
+
+" Write and close the buffer in one command
+nnoremap Q :w\|bd<cr>
+
+" Print current file path with a simple keystroke
+nnoremap <leader>pp :echo @%<cr>
+
+" Handlebars treated as html for syntax coloring
+au BufReadPost *.handlebars set syntax=html
+
+" Map j and k to gj and gk to more easily work with wrapped lines
+noremap <silent> <expr> j (v:count == 0 ? 'gj' : 'j')
+noremap <silent> <expr> k (v:count == 0 ? 'gk' : 'k')
+
+" ----------------- REPLACE WORDS ----------------- "
+" Allows you to easily replace the current word and all its occurrences.
+" Replace through whole document
+nnoremap <Leader>ra :%s/\<<C-r><C-w>\>/
+" Replace just on current line
+nnoremap <Leader>rw :s/\<<C-r><C-w>\>/
+" Replace highlighted word through whole document
+vnoremap <Leader>ra y:%s/<C-r>"/
+" Replace highlighted word through line
+vnoremap <Leader>rw y:s/<C-r>"/
+
+" Replace tabs with four spaces. Make sure that there is a tab character between
+" the first pair of slashes when you copy this mapping into your .vimrc!
+nnoremap <Leader>rts :%s/\t/    /g<CR>
 " ----------------- fzf ----------------- "
 " Load FZF with ,f
 nnoremap <leader>f :FZF<cr>
@@ -292,7 +290,7 @@ nnoremap <leader>L <C-W>L
 nnoremap <leader>H <C-W>H
 nnoremap <leader>w <C-W>w
 nnoremap <leader>_ <C-W>_
-nnoremap <leader>\| <C-W>\|
+nnoremap <leader>M <C-W>\|
 nnoremap <leader>= <C-W>=
 nmap <C-j> <C-W>j
 nmap <C-k> <C-W>k
@@ -306,30 +304,27 @@ if has('nvim')
   tnoremap <C-l> <C-\><C-n><C-w>l
   tnoremap <Esc> <C-\><C-n>
 endif
-" Un-highlight after search
-nnoremap <leader><space> :noh<cr>
 " ----------------- FAST-ESCAPE ----------------- "
 " Ensures that no remapping of esc in insert mode delays getting
 " back into normal mode
-if ! has('gui_running')
-  set ttimeoutlen=10
-  augroup FastEscape
-    autocmd!
-    au InsertEnter * set timeoutlen=0
-    au InsertLeave * set timeoutlen=1000
-  augroup END
-endif
+" if ! has('gui_running')
+"   set ttimeoutlen=10
+"   augroup FastEscape
+"     autocmd!
+"     au InsertEnter * set timeoutlen=0
+"     au InsertLeave * set timeoutlen=1000
+"   augroup END
+" endif
 " ----------------- JAVASCRIPT HELPERS ----------------- "
 " Console log from insert mode; Puts focus inside parentheses
-imap cll console.log();<Esc>==f(a
+" imap cll console.log();<Esc>==f(a
 " Console log from visual mode on next line, puts visual selection inside parentheses
-vmap cll yocll<Esc>p
+" vmap cll yocll<Esc>p
 " Console log from normal mode, inserted on next line with word your on inside parentheses
-nmap clw yiwocll<Esc>pyiwPli, <Esc>bbysiw'
-nmap cll console.log();<Esc>==f(a
+" nmap clw yiwocll<Esc>pyiwPli, <Esc>bbysiw'
+" nmap cll console.log();<Esc>==f(a
 " Delete all debugger; statements
 nnoremap <leader>dd :call Preserve("g/debugger/d")<CR>
-
 
 
 " -------------------------------------------------- "
@@ -385,7 +380,7 @@ let g:closetag_close_shortcut = '<leader>>'
 " ----------------- plasticboy/vim-markdown ----------------- "
 "let vim_markdown_preview_toggle=0
 "let vim_markdown_preview_browser='Google Chrome'
-" let g:vim_markdown_folding_disabled = 1 " vim-markdown disable folding
+let g:vim_markdown_folding_disabled = 1 " vim-markdown disable folding
 " ----------------- Valloric/MatchTagAlways ----------------- "
 let g:mta_use_matchparen_group = 0
 let g:mta_filetypes = { 'jsx': 1, 'html' : 1, 'xhtml' : 1, 'xml' : 1, 'jinja' : 1, 'html.handlebars': 1}
@@ -393,7 +388,12 @@ nnoremap <leader>% :MtaJumpToOtherTag<cr>
 " ----------------- vim-airline/vim-airline ----------------- "
 " Airline
 let g:airline_powerline_fonts=1
-let g:airline_theme='solarized'
+" Decent themes to go with Ayu:
+" kalisi
+" papercolor
+" base16
+" seagull
+let g:airline_theme='onehalflight'
 set laststatus=2
 let g:airline#extensions#whitespace#enabled = 0
 " disable to improve fugitive performance
@@ -527,35 +527,7 @@ let g:ale_statusline_format = ['X %d', '? %d', '']
 " %s is the error or warning message
 let g:ale_echo_msg_format = '%linter% says %s'
 " Map keys to navigate between lines with errors and warnings.
-nnoremap <leader>an :ALENextWrap<cr>
-nnoremap <leader>ap :ALEPreviousWrap<cr>
-
-" Neomake maps   ]
-function! LocationNext()
-  try
-    lnext
-  catch
-    try | lfirst | catch | endtry
-  endtry
-endfunction
-
-" Toggle the quickfix window open or close
-" Try closing a window and check if the number
-" of open buffers changes, if not, then open
-" the window, otherwise close it
-function! ToggleNeomakeWindow()
-  " Get open buffers
-  let old_last_winnr = winnr('$')
-  lclose
-  if old_last_winnr == winnr('$')
-    " Nothing was closed, open syntastic error location panel
-    lopen
-  endif
-endfunction
-
-" Neomake - Tab goes to next error
-nnoremap <Tab> :call LocationNext()<cr>
-nnoremap <Leader><Tab> :call ToggleNeomakeWindow()<cr>
+nnoremap <S-T> :ALENextWrap<cr>
 " ----------------- mxw/vim-jsx ----------------- "
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 " ----------------- FooSoft/vim-argwrap ----------------- "
@@ -580,23 +552,29 @@ let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 map <Leader><Leader>j <Plug>(easymotion-j)
 map <Leader><Leader>k <Plug>(easymotion-k)
+" ----------------- jcharry/vim-logger ----------------- "
+" jcharry/vim-logger extensions
+let g:vim_logger_templates = {
+      \'js': "console.log('$$', $$);",
+      \}
+" ----------------- majutsushi/tagbar ----------------- "
+nnoremap <Leader>t :TagbarToggle<CR>
+" ----------------- vim-json ----------------- "
+let g:vim_json_syntax_conceal = 0
+" ----------------- 'mileszs/ack.vim' ----------------- "
+" Use ag with ack.vim instead of ack
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
+" :Ack! will prevent jumping to first result automatically, Map this shit
+nnoremap <leader>se :Ack!<Space>
+" ----------------- tpope/vim-fugitive ----------------- "
+" Open vim diffs in a vertical split
+set diffopt+=vertical
+" ----------------- Yggdroot/indentLine ----------------- "
+" IndentLine {{
+let g:indentLine_char = '|'
+let g:indentLine_showFirstIndentLevel = 0
+let g:indentLine_setColors = 2
+" }}
 
-" Load folds automatically on startup
-set foldcolumn=1
-augroup AutoSaveFolds
-  autocmd!
-  autocmd BufWinLeave,BufWritePre *.* mkview!
-  autocmd BufWinEnter *.* silent loadview
-augroup END
-
-if has('mouse')
-  set mouse=a
-endif
-
-" So webpack hot reload will work with vim
-" has to do with how VIM saves files, sometimes saving
-" directly to a file, othertimes renaming the old file
-" and writes a new one
-set backupcopy=yes
 
