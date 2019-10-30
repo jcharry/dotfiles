@@ -1,0 +1,11 @@
+--ignore-dir=node_modules
+--ignore-dir=scripts-compressed
+--ignore-dir=styles-compressed
+--ignore-dir=scripts-thirdparty
+--ignore-dir=build-scripts
+--ignore-dir=fixtures
+--ignore-dir=tmp
+--ignore-dir=coverage
+--ignore-dir=cypress/fixtures
+--ignore-dir=build
+--type-add=js=.js,.jsx,.ts,.tsx
