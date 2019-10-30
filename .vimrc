@@ -1,3 +1,4 @@
+
 autocmd!
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -13,35 +14,41 @@ Plugin 'VundleVim/Vundle.vim'
 
 " Syntax
 Plugin 'Raimondi/delimitMate'               " Automatically add closing brackets, quotes, etc in insert mode
-Plugin 'Valloric/MatchTagAlways'            " Highlight html tags - https://github.com/Valloric/MatchTagAlways
+" Plugin 'Valloric/MatchTagAlways'            " Highlight html tags - https://github.com/Valloric/MatchTagAlways
 Plugin 'alvan/vim-closetag'                 " Autoclose (x)html tags
 Plugin 'mxw/vim-jsx'                        " JSX syntax highlighting and formatting - https://github.com/mxw/vim-jsx
 Plugin 'othree/html5.vim'                   " Omnicomplete function for html
 Plugin 'pangloss/vim-javascript'            " Javascript syntax highlighting
 Plugin 'leafgarland/typescript-vim'         " Typescript syntax
+Plugin 'peitalin/vim-jsx-typescript'        " TSX syntax
+Plugin 'Quramy/tsuquyomi'                   " Typescript omnicompletion
+Plugin 'prettier/vim-prettier'              " Javascript code formatting
+" Plugin 'jxnblk/vim-mdx-js'                  " MDX Syntax coloring
 " Plugin 'plasticboy/vim-markdown'            " Markdown support - https://github.com/plasticboy/vim-markdown
 
 " Completion, Linters, etc.
 Plugin 'benjie/neomake-local-eslint.vim'    " Allows for use of local .eslintrc
-Plugin 'w0rp/ale'                           " Linter - alternative to Neomake
-Plugin 'Quramy/tsuquyomi'                   " TSS Client Server
-Plugin 'mhartington/nvim-typescript'        " Neovim typescript tools
+Plugin 'dense-analysis/ale'                           " Linter - alternative to Neomake
+" Plugin 'Quramy/tsuquyomi'                   " TSS Client Server
 
 " Utilities, Mappings
 Plugin 'FooSoft/vim-argwrap'                " unwrap dictionaries, datastructures, etc
-Plugin 'aperezdc/vim-template'              " Templates for new files
+" Plugin 'aperezdc/vim-template'              " Templates for new files
 Plugin 'easymotion/vim-easymotion'          " Change standard search functionality
 Plugin 'elzr/vim-json'                      " Makes working with JSON nice
-Plugin 'Shougo/vimproc.vim'                 " Async execution library
+" Plugin 'Shougo/vimproc.vim'                 " Async execution library
 
 " Plugin 'scrooloose/nerdTree'                " File system explorer
 Plugin 'tpope/vim-vinegar'                  " In window file explorer
+Plugin 'tpope/vim-apathy'                   " path modifiers to gf and the likes
+Plugin 'francoiscabrol/ranger.vim'          " File explorer
+Plugin 'rbgrouleff/bclose.vim'              " Required to use ranger.vim with neovim
 Plugin 'scrooloose/nerdcommenter'           " Quick code commenting - https://github.com/scrooloose/nerdcommenter
 Plugin 'tpope/vim-repeat'                   " Make the . key do more
 Plugin 'tpope/vim-surround'                 " Surround words with things
 Plugin 'christoomey/vim-system-copy'        " Make copying to system clipboard less dumb - https://github.com/christoomey/vim-system-copy
 Plugin 'vim-scripts/BufOnly.vim'            " use <leader>bd to delete all buffers but current one
-Plugin 'godlygeek/tabular'                  " Making tables is a breeze
+" Plugin 'godlygeek/tabular'                  " Making tables is a breeze
 
 " Grepping and File Finder
 Plugin 'junegunn/fzf'                       " fuzzy file finder - use with :FZF
@@ -50,23 +57,31 @@ Plugin 'mileszs/ack.vim'                    " Ack search (faster grep)
 " Git integration
 Plugin 'airblade/vim-gitgutter'             " Show git diffs in gutter
 Plugin 'tpope/vim-fugitive'                 " Git wrapper
+Plugin 'tommcdo/vim-fubitive'               " Bitbucket compability for Gbrowse
 
 " UI
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'ayu-theme/ayu-vim'
-Plugin 'rakr/vim-one'
-Plugin 'sonph/onehalf', {'rtp': 'vim/'}
+" Plugin 'altercation/vim-colors-solarized'
+" Plugin 'ayu-theme/ayu-vim'
+" Plugin 'crusoexia/vim-monokai'
+" Plugin 'tomasr/molokai'
 Plugin 'NLKNguyen/papercolor-theme'
+" Plugin 'dracula/vim'
+" Plugin 'rakr/vim-one'
+" Plugin 'sonph/onehalf', {'rtp': 'vim/'}
+" Plugin 'rakr/vim-two-firewatch'
+" Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'vim-airline/vim-airline'            " Status Bar prettify
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'Yggdroot/indentLine'
+Plugin 'tpope/vim-unimpaired'
 
 " Autocomplete
-Plugin 'Shougo/deoplete.nvim'               " Autocompletion
+" Plugin 'Shougo/deoplete.nvim'               " Autocompletion
+Plugin 'neoclide/coc.nvim'                  " Another autocompleter 
 Plugin 'marijnh/tern_for_vim'               " Code analyzer for JS
 
 " Visualize ctags
-Plugin 'majutsushi/tagbar'
+" Plugin 'majutsushi/tagbar'
 
 "My Plugins
 Plugin 'jcharry/vim-logger'
@@ -122,7 +137,7 @@ nmap _= :call Preserve("normal gg=G")<CR>
 
 " Remove trailing spaces on save
 if has("autocmd")
-  autocmd BufWritePre *.py,*.js,*.jsx,*.cpp,*.h :call Preserve("%s/\\s\\+$//e")
+  autocmd BufWritePre *.py,*.js,*.jsx,*.ts,*.tsx,*.cpp,*.h :call Preserve("%s/\\s\\+$//e")
 endif
 
 " -------------------------------------------------- "
@@ -147,19 +162,43 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-set background=light
-colorscheme onehalflight
+
+set background=dark
+" colorscheme dracula
+" set background=light
+" let ayucolor="light"
+" colorscheme ayu
+colorscheme PaperColor
+" Column highlighting
+highlight ColorColumn guibg=#fcfcfc
+set colorcolumn=80,120
+
+" if strftime("%H") > 14
+"   set background=dark
+"   colorscheme dracula
+"   highlight ColorColumn guibg=#121212
+" else
+"   set background=light
+"   colorscheme onehalflight
+" endif
 
 syntax enable
 set t_Co=256
 set encoding=utf-8
 
-" Column highlighting
-highlight ColorColumn guibg=#efefef
-set colorcolumn=80,120
 
 " Python highlighting
 let python_highlight_all=1
+let g:python_host_prog  = '/usr/local/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
+
+let g:ruby_host_prog = '/usr/local/bin/neovim-ruby-host'
+
+" Configure gf to find node_modules
+" set suffixesadd+=.js,.ts,.tsx,.jsx
+" set path+=node_modules;~
+" set path+=packages/**/node_modules;~
+
 " -------------------- Formatting -------------------- "
 " Set tabs and spaces
 " set background=dark
@@ -208,7 +247,7 @@ set foldcolumn=1
 augroup AutoSaveFolds
   autocmd!
   autocmd BufWinLeave,BufWritePre *.* mkview!
-  autocmd BufWinEnter *.* silent loadview
+  autocmd BufWinEnter *.* silent! loadview
 augroup END
 
 if has('mouse')
@@ -227,6 +266,10 @@ set backupcopy=yes
 " Remap leader
 let mapleader = ","
 let g:deoplete#enable_at_startup = 1
+
+" Format json with =j
+" nmap =j :%!python -c "import json, sys, collections; print json.dumps(json.load(sys.stdin, objectpairshook=collections.OrderedDict), indent=2)"
+nmap =j :%!python -m json.tool<CR>
 
 " Add shortcut to edit .vimrc
 nnoremap <Leader>ev :vsplit /Users/jcharry/.vimrc<cr>
@@ -247,7 +290,7 @@ nmap <leader>l :set list!<CR>
 set listchars=tab:▸\ ,trail:\
 
 " Un-highlight after search
-nnoremap <leader><space> :noh<cr>
+nnoremap <silent> <leader><space> :noh<cr>
 
 "Yank an entire file with 'yaf'
 onoremap af :<C-u>normal! ggVG<CR>
@@ -281,7 +324,7 @@ vnoremap <Leader>rw y:s/<C-r>"/
 nnoremap <Leader>rts :%s/\t/    /g<CR>
 " ----------------- fzf ----------------- "
 " Load FZF with ,f
-nnoremap <leader>f :FZF<cr>
+nnoremap <leader>f :FZF --reverse --inline-info<cr>
 " ----------------- WINDOW MOVEMENT ----------------- "
 " Map comma to Ctrl-W to for Window operations
 nnoremap <leader>J <C-W>J
@@ -333,29 +376,51 @@ nnoremap <leader>dd :call Preserve("g/debugger/d")<CR>
 " ----------------- pangloss/vim-javascript ----------------- "
 let g:javascript_plugin_flow=1
 " ----------------- prettier/vim-prettier ----------------- "
-" max line lengh that prettier will wrap on
+" max line length that prettier will wrap on
+" Prettier default: 80
 let g:prettier#config#print_width = 80
 
 " number of spaces per indentation level
+" Prettier default: 2
 let g:prettier#config#tab_width = 2
 
 " use tabs over spaces
+" Prettier default: false
 let g:prettier#config#use_tabs = 'false'
 
 " print semicolons
+" Prettier default: true
 let g:prettier#config#semi = 'true'
 
 " single quotes over double quotes
+" Prettier default: false
 let g:prettier#config#single_quote = 'true'
 
 " print spaces between brackets
+" Prettier default: true
 let g:prettier#config#bracket_spacing = 'true'
 
 " put > on the last line instead of new line
+" Prettier default: false
 let g:prettier#config#jsx_bracket_same_line = 'false'
 
+" avoid|always
+" Prettier default: avoid
+let g:prettier#config#arrow_parens = 'avoid'
+
 " none|es5|all
+" Prettier default: none
 let g:prettier#config#trailing_comma = 'none'
+
+" flow|babylon|typescript|css|less|scss|json|graphql|markdown
+" Prettier default: babylon
+let g:prettier#config#parser = 'typescript'
+
+" cli-override|file-override|prefer-file
+let g:prettier#config#config_precedence = 'prefer-file'
+
+" always|never|preserve
+let g:prettier#config#prose_wrap = 'preserve'
 
 " flow|babylon|typescript|postcss|json|graphql
 "g:prettier#config#parser = 'flow'
@@ -393,7 +458,7 @@ let g:airline_powerline_fonts=1
 " papercolor
 " base16
 " seagull
-let g:airline_theme='onehalflight'
+let g:airline_theme='papercolor'
 set laststatus=2
 let g:airline#extensions#whitespace#enabled = 0
 " disable to improve fugitive performance
@@ -506,13 +571,15 @@ let g:delimitMate_expand_cr=1
 " Need to ignore <>, otherwise, combined with html closetag-vim, it
 " puts an extra >
 let g:delimitMate_matchpairs = "(:),[:],{:}"
-" ----------------- w0rp/ale ----------------- "
-let g:ale_linters = {
-      \   'javascript': ['eslint'],
-      \}
+" ----------------- dense-analysis/ale ----------------- "
+" let g:ale_linters = {
+"       \   'javascript': ['eslint'],
+"       \}
 let g:ale_lint_on_text_changed='always'
-let g:ale_lint_delay=700
-
+let g:ale_lint_delay=300
+" let g:ale_fixers = {
+"   \ 'javascript': ['eslint'],
+"   \}
 let g:airline#extensions#ale#enabled = 1
 let g:ale_sign_column_always = 1
 let g:ale_sign_error = 'X'
@@ -527,9 +594,12 @@ let g:ale_statusline_format = ['X %d', '? %d', '']
 " %s is the error or warning message
 let g:ale_echo_msg_format = '%linter% says %s'
 " Map keys to navigate between lines with errors and warnings.
-nnoremap <S-T> :ALENextWrap<cr>
+nmap <silent> <Tab> <Plug>(ale_next_wrap)
+nmap <silent> <S-Tab> <Plug>(ale_previous_wrap)
+nnoremap <silent> gd :ALEGoToDefinition<CR>
 " ----------------- mxw/vim-jsx ----------------- "
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+
 " ----------------- FooSoft/vim-argwrap ----------------- "
 nnoremap <silent> <leader>a :ArgWrap<CR>
 " ----------------- easymotion/vim-easymotion ----------------- "
@@ -556,6 +626,8 @@ map <Leader><Leader>k <Plug>(easymotion-k)
 " jcharry/vim-logger extensions
 let g:vim_logger_templates = {
       \'js': "console.log('$$', $$);",
+      \'ts': "console.log('$$', $$);",
+      \'tsx': "console.log('$$', $$);",
       \}
 " ----------------- majutsushi/tagbar ----------------- "
 nnoremap <Leader>t :TagbarToggle<CR>
@@ -563,7 +635,9 @@ nnoremap <Leader>t :TagbarToggle<CR>
 let g:vim_json_syntax_conceal = 0
 " ----------------- 'mileszs/ack.vim' ----------------- "
 " Use ag with ack.vim instead of ack
-let g:ackprg = 'ag --nogroup --nocolor --column'
+" let g:ackprg = 'ag --nogroup --nocolor --column'
+" Use ripgrep with ack.vim instead of ack
+let g:ackprg = 'rg --vimgrep --no-heading'
 
 " :Ack! will prevent jumping to first result automatically, Map this shit
 nnoremap <leader>se :Ack!<Space>
@@ -576,5 +650,21 @@ let g:indentLine_char = '|'
 let g:indentLine_showFirstIndentLevel = 0
 let g:indentLine_setColors = 2
 " }}
+" ----------------- francoiscabrol/ranger.vim ----------------- "
+let g:ranger_map_keys = 0
+map <leader>rr :Ranger<CR>
+let g:ranger_replace_netrw = 1 " open ranger when vim open a directory
+" ----------------- Quramy/tsuquyomi ----------------- "
+let g:tsuquyomi_completion_detail = 1
 
 
+" autocmd VimEnter * :FZF --reverse --inline-info
+
+autocmd BufNewFile,BufRead *.mdx set filetype=markdown.mdx
+" set filetypes as typescript.tsx
+autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+
+
+" Allow loading of project specific vimrc files
+set exrc
+set secure
