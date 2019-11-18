@@ -112,6 +112,9 @@ export PATH="/usr/local/opt/ruby/bin:$PATH"
 
 # NVM
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"
 #
 # Set fzf installation directory path
 export FZF_BASE=/usr/local/bin/fzf
@@ -168,3 +171,11 @@ alias ctags="`brew --prefix`/bin/ctags"
 export PATH="/usr/local/opt/mongodb@3.6/bin:$PATH"
 export WORKON_HOME=$HOME/.virtualenvs
 source /usr/local/bin/virtualenvwrapper.sh
+
+# voltus stuff
+# voltus monorepo so we can pick up scripts from there
+export PATH="$PATH:Users/jamiecharry/Dev/voltus/bin"
+
+# go
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin

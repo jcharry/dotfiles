@@ -192,7 +192,7 @@ let python_highlight_all=1
 let g:python_host_prog  = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
-let g:ruby_host_prog = '/usr/local/bin/neovim-ruby-host'
+let g:ruby_host_prog = '/Users/jamiecharry/.gem/ruby/2.3.0/bin/neovim-ruby-host'
 
 " Configure gf to find node_modules
 " set suffixesadd+=.js,.ts,.tsx,.jsx
